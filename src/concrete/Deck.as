@@ -4,9 +4,9 @@ import interfaces.ICard;
 
 public class Deck
 {
-    private static const MAX_VISIBLE_CARDS:int = 10;
+    private static const MAX_VISIBLE_CARDS:int = 5;
     private static const DELTA_Y:Number = 50;
-    private static const DELTA_Z:Number = 100;
+    private static const DELTA_Z:Number = 64;
 
     private var _cardViews:Vector.<CardRenderer>;
 
