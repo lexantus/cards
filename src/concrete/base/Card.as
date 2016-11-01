@@ -16,5 +16,10 @@ public class Card implements ICard
         _type = data.Type;
         _date = data.Date;
     }
+
+    public function getDate():String
+    {
+        return _date;
+    }
 }
 }
