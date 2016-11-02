@@ -3,6 +3,7 @@ package
 import api.API;
 
 import concrete.Deck;
+import concrete.Timeline;
 
 import factories.CardFactory;
 
@@ -20,6 +21,7 @@ public class App extends Sprite
     private var _cardFactory:CardFactory;
     private var _cards:Vector.<ICard>;
     private var _deck:Deck;
+    private var _timeline:Timeline;
 
     public function App()
     {
@@ -45,7 +47,8 @@ public class App extends Sprite
             _cards.push(card);
         }
 
-        _deck = new Deck(_cards, 250);
+        //_deck = new Deck(_cards, 250);
+        _timeline = new Timeline(_cards);
     }
 }
 }
