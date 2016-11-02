@@ -9,6 +9,8 @@ import factories.CardFactory;
 
 import flash.display.Sprite;
 import flash.display.Stage;
+import flash.display.StageAlign;
+import flash.display.StageScaleMode;
 import flash.events.Event;
 
 import interfaces.ICard;
@@ -30,7 +32,10 @@ public class App extends Sprite
 
     private function addedToStageHandler(event:Event):void
     {
+        stage.scaleMode = StageScaleMode.NO_SCALE;
+        stage.align = StageAlign.TOP_LEFT;
         App.stage = stage;
+
         _cardFactory = new CardFactory();
         new API(getNews);
     }
