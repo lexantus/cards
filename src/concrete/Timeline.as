@@ -2,98 +2,88 @@ package concrete
 {
 import flash.display.Sprite;
 import flash.events.MouseEvent;
-import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 
 import interfaces.ICard;
 
 public class Timeline extends Sprite
 {
-    private const LINE_THICKNESS:Number = 20;
-    private const PADDING_X:Number = 10;
-
-    private const LONG_LINE_WIDTH:Number = 150;
-    private const LONG_OVER_LINE_WIDTH:Number = 175;
-
-    private const SHORT_LINE_WIDTH:Number = 20;
-    private const SHORT_OVER_LINE_WIDTH:Number = 30;
-
-    private var _hitAreas:Vector.<Sprite>;
-    private var _lines:Vector.<Sprite>;
-
+    private var _lines:Vector.<TimeLineItem>;
     private var _y:Number = 0;
 
     public function Timeline(sortedCards:Vector.<ICard>)
     {
         var n:int = sortedCards.length;
-        _lines = new Vector.<Sprite>(n, true);
-        _hitAreas = new Vector.<Sprite>(n, true);
+        _lines = new Vector.<TimeLineItem>();
 
         for (var i:int = 0; i < n; i++)
         {
-            drawYear(sortedCards[ i ]);
+            drawLine(sortedCards[ i ]);
         }
-        y = 200;
-        x = 0;
+        y = 50;
+        x = 200;
         App.stage.addChild(this);
     }
 
-    private function drawYear(card:ICard):void
+    private function drawLine(card:ICard):void
     {
-        var tf:TextField = new TextField();
-        tf.autoSize = TextFieldAutoSize.RIGHT;
-        tf.text = getCardTitle(card);
+        var line:TimeLineItem = new TimeLineItem();
+        line.y = _y;
+        line.gotoAndStop(2);
+        line.active_state.label.autoSize = TextFieldAutoSize.RIGHT;
+        line.active_state.label.text = getCardTitle(card);
+        line.active_state.label.visible = false;
+        line.active_state.redLine.visible = false;
+        line.hitAreaSymbol.useHandCursor = true;
+        line.hitAreaSymbol.mouseEnabled = true;
+        line.hitAreaSymbol.addEventListener(MouseEvent.MOUSE_OVER, mouseOverHandler);
+        line.hitAreaSymbol.addEventListener(MouseEvent.MOUSE_OUT, mouseOutHandler);
+        line.hitAreaSymbol.addEventListener(MouseEvent.CLICK, clickHandler);
+        addChild(line);
 
-        var hitArea:Sprite = new Sprite();
-        hitArea.graphics.beginFill(0xff0000, 0.1);
-        hitArea.graphics.drawRect(0, 0, LONG_OVER_LINE_WIDTH, LINE_THICKNESS);
-        hitArea.graphics.endFill();
-        hitArea.addEventListener(MouseEvent.MOUSE_OVER, longLineMouseOverHandler);
-        hitArea.addEventListener(MouseEvent.MOUSE_OUT, longLineMouseOutHandler);
-        addChild(hitArea);
+        _y += 7;
+        _lines.push(line);
+    }
 
-        var longLine:Sprite = new Sprite();
-        longLine.graphics.lineStyle(3, 0xffff00);
-        longLine.graphics.moveTo(0, 0);
-        longLine.graphics.lineTo(LONG_LINE_WIDTH, 0);
-        hitArea.addChild(longLine);
+    private function clickHandler(event:MouseEvent):void
+    {
+        var line:TimeLineItem = TimeLineItem(event.currentTarget.parent);
+        line.active_state.label.visible = true;
+        line.active_state.redLine.visible = true;
 
-        tf.x = 0;
-        tf.y = -tf.height / 2;
-        longLine.addChild(tf);
+        var n:int = _lines.length;
+        for (var i:int = 0; i < n; i++)
+        {
+            if (_lines[ i ] != line)
+            {
+                _lines[ i ].active_state.label.visible = false;
+                _lines[ i ].active_state.redLine.visible = false;
+            }
+        }
+    }
 
-        _hitAreas[ _hitAreas.length - 1 ] = hitArea;
-        _lines[ _lines.length - 1 ] = longLine;
+    private function mouseOverHandler(event:MouseEvent):void
+    {
+        var line:TimeLineItem = TimeLineItem(event.currentTarget.parent);
+        line.active_state.play();
+    }
+
+    private function mouseOutHandler(event:MouseEvent):void
+    {
+        var line:TimeLineItem = TimeLineItem(event.currentTarget.parent);
+        line.active_state.gotoAndStop(1);
     }
 
     private function getCardTitle(card:ICard):String
     {
-        return card.getYear() + " " + card.getMonth();
+        var month:String = card.getMonth();
+        return card.getYear() + " " + getMonthRusString(int(month));
     }
 
-    private function longLineMouseOverHandler(event:MouseEvent):void
+    private function getMonthRusString(value:int):String
     {
-        /*        var hitArea:DisplayObjectContainer = DisplayObjectContainer(event.currentTarget);
-         hitArea.width = LONG_OVER_LINE_WIDTH;
-
-         var longLine:Sprite = Sprite(hitArea.getChildByName("longLine"));
-         longLine.graphics.clear();
-         longLine.graphics.lineStyle(3, 0xffff00, 1, false, "normal", CapsStyle.ROUND);
-         longLine.graphics.moveTo(LONG_OVER_LINE_WIDTH, hitArea.height / 2);
-         longLine.graphics.lineTo(0, hitArea.height / 2);
-
-         var tf:TextField = TextField(hitArea.getChildByName("tf"));
-         tf.y -= LONG_OVER_LINE_WIDTH - LONG_LINE_WIDTH;*/
-    }
-
-    private function longLineMouseOutHandler(event:MouseEvent):void
-    {
-
-    }
-
-    private function drawMonthYear():void
-    {
-
+        var monthes:Vector.<String> = new <String>[ "Январь", "Февраль", "Март", "Апрель", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" ];
+        return monthes[ value - 1 ];
     }
 }
 }
