@@ -52,7 +52,10 @@ public class Card implements ICard
     public function getCardTitle():String
     {
         var month:String = getMonth();
-        return getYear() + " " + getMonthRusString(int(month));
+        if (getYearOnly())
+            return getYear();
+        else
+            return getYear() + " " + getMonthRusString(int(month));
     }
 
     public function setMonth(month:String):void
