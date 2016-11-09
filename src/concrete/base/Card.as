@@ -19,6 +19,7 @@ public class Card implements ICard
         _type = data.Type;
         _date = data.Date;
         _year = data.Year;
+        _yearOnly = data.YearOnly;
         _month = data.Month;
     }
 
@@ -62,6 +63,11 @@ public class Card implements ICard
     public function setYear(year:String):void
     {
         _year = year;
+    }
+
+    public function setYearOnly(value:Boolean):void
+    {
+        _yearOnly = value;
     }
 }
 }

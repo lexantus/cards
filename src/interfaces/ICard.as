@@ -19,5 +19,7 @@ public interface ICard
     function setMonth(month:String):void;
 
     function setYear(year:String):void;
+
+    function setYearOnly(value:Boolean):void;
 }
 }
