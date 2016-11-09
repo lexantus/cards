@@ -15,7 +15,7 @@ import flash.events.Event;
 
 import interfaces.ICard;
 
-[SWF(width="640", height="578", frameRate="60", backgroundColor="#cccccc")]
+[SWF(width="640", height="578", frameRate="60", backgroundColor="#333333")]
 public class App extends Sprite
 {
     public static var stage:Stage;
@@ -52,8 +52,9 @@ public class App extends Sprite
             _cards.push(card);
         }
 
-        //_deck = new Deck(_cards, 250);
+        _deck = new Deck(_cards, 250);
         _timeline = new Timeline(_cards);
     }
+
 }
 }

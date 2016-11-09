@@ -1,8 +1,10 @@
 package concrete
 {
+import flash.display.Sprite;
+
 import interfaces.ICard;
 
-public class Deck
+public class Deck extends Sprite
 {
     private static const MAX_VISIBLE_CARDS:int = 5;
     private static const DELTA_Y:Number = 50;
@@ -12,15 +14,19 @@ public class Deck
 
     public function Deck(cards:Vector.<ICard>, positionY:Number)
     {
-        _cardViews = new Vector.<CardRenderer>(MAX_VISIBLE_CARDS, true);
+        _cardViews = new Vector.<CardRenderer>(cards.length, true);
 
-        for (var i:int = 0; i < MAX_VISIBLE_CARDS; i++)
+        var n:int = cards.length;
+        for (var i:int = 0; i < n; i++)
         {
-            _cardViews[ i ] = new CardRenderer();
+            _cardViews[ i ] = new CardRenderer(cards[ i ]);
             _cardViews[ i ].y = (i - MAX_VISIBLE_CARDS) * DELTA_Y + positionY;
             _cardViews[ i ].z = (MAX_VISIBLE_CARDS - i) * DELTA_Z;
-            App.stage.addChild(_cardViews[ i ]);
+            addChild(_cardViews[ i ]);
         }
+        x = -20;
+        y = -50;
+        App.stage.addChild(this);
     }
 }
 }

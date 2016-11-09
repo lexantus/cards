@@ -6,15 +6,19 @@ import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
 
+import interfaces.ICard;
+
 public class CardRenderer extends Sprite
 {
     private var bg:CardPanel;
+    private var card:ICard;
 
-    public function CardRenderer()
+    public function CardRenderer(card:ICard)
     {
+        this.card = card;
         bg = new CardPanel();
-        bg.header.header_mc.gotoAndStop(2);
-        bg.header.title.text = "Hello world";
+        //bg.header.header_mc.gotoAndStop(2);
+        bg.header.title.text = card.getCardTitle();
         addChild(bg);
 
         addEventListener(MouseEvent.MOUSE_OVER, cardViewMouseOverHandler);

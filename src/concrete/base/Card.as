@@ -41,5 +41,27 @@ public class Card implements ICard
     {
         return _yearOnly;
     }
+
+    public function getMonthRusString(value:int):String
+    {
+        var monthes:Vector.<String> = new <String>[ "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" ];
+        return monthes[ value - 1 ];
+    }
+
+    public function getCardTitle():String
+    {
+        var month:String = getMonth();
+        return getYear() + " " + getMonthRusString(int(month));
+    }
+
+    public function setMonth(month:String):void
+    {
+        _month = month;
+    }
+
+    public function setYear(year:String):void
+    {
+        _year = year;
+    }
 }
 }
