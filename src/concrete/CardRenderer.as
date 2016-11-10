@@ -17,12 +17,17 @@ public class CardRenderer extends Sprite
     {
         this.card = card;
         bg = new CardPanel();
-        //bg.header.header_mc.gotoAndStop(2);
         bg.header.title.text = card.getCardTitle();
         addChild(bg);
 
         addEventListener(MouseEvent.MOUSE_OVER, cardViewMouseOverHandler);
         addEventListener(MouseEvent.MOUSE_OUT, cardViewMouseOutHandler);
+    }
+
+    public function update(card:ICard):void
+    {
+        this.card = card;
+        bg.header.title.text = card.getCardTitle();
     }
 
     private function cardViewMouseOverHandler(event:Event):void

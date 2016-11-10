@@ -45,6 +45,9 @@ public class Card implements ICard
 
     public function getMonthRusString(value:int):String
     {
+        if (!value)
+            return "No month";
+
         var monthes:Vector.<String> = new <String>[ "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" ];
         return monthes[ value - 1 ];
     }
