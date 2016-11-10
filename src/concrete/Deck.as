@@ -19,7 +19,7 @@ public class Deck extends Sprite
         var n:int = cards.length < MAX_VISIBLE_CARDS ? cards.length : MAX_VISIBLE_CARDS;
         for (var i:int = 0; i < n; i++)
         {
-            _cardViews[ i ] = new CardRenderer(cards[ cards.length - i - 1 ]);
+            _cardViews[ i ] = new CardRenderer(cards[ cards.length - (n - i)]);
             _cardViews[ i ].y = (i - MAX_VISIBLE_CARDS) * DELTA_Y + positionY;
             _cardViews[ i ].z = (MAX_VISIBLE_CARDS - i) * DELTA_Z;
             addChild(_cardViews[ i ]);
