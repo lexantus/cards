@@ -15,7 +15,7 @@ import flash.events.Event;
 
 import interfaces.ICard;
 
-[SWF(width="640", height="578", frameRate="60", backgroundColor="#333333")]
+[SWF(width="640", height="578", frameRate="60", backgroundColor="#F3F3F3")]
 public class App extends Sprite
 {
     public static var stage:Stage;

@@ -16,15 +16,15 @@ public class Deck extends Sprite
     {
         _cardViews = new Vector.<CardRenderer>(cards.length, true);
 
-        var n:int = cards.length;
+        var n:int = cards.length < MAX_VISIBLE_CARDS ? cards.length : MAX_VISIBLE_CARDS;
         for (var i:int = 0; i < n; i++)
         {
-            _cardViews[ i ] = new CardRenderer(cards[ i ]);
+            _cardViews[ i ] = new CardRenderer(cards[ cards.length - i - 1 ]);
             _cardViews[ i ].y = (i - MAX_VISIBLE_CARDS) * DELTA_Y + positionY;
             _cardViews[ i ].z = (MAX_VISIBLE_CARDS - i) * DELTA_Z;
             addChild(_cardViews[ i ]);
         }
-        x = -20;
+        x = -15;
         y = -50;
         App.stage.addChild(this);
     }

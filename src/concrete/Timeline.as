@@ -33,7 +33,7 @@ public class Timeline extends Sprite
         }
 
         x = 640;
-        y = 65;
+        y = 10;
         App.stage.addChild(this);
     }
 
